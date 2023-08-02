@@ -1,4 +1,4 @@
-import ruby2xmlLogo from '/ruby2xml.svg'
+import ruby2xmlLogo from '/txt2ruby.svg'
 
 const Header = () => {
     return (
@@ -25,7 +25,7 @@ const Header = () => {
                                 <a href="https://tsoithomas.medium.com/" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">medium</a>
                             </li>
                             <li>
-                                <a href="https://github.com/tsoithomas/ruby2xml" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">github</a>
+                                <a href="https://github.com/tsoithomas/txt2ruby" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">github</a>
                             </li>
                         </ul>
                     </div>

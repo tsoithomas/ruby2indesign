@@ -1,31 +1,26 @@
-
-
 const FileUpload = () => {
-
-
     const openFile = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        let status:Array<string> = []; // Status output
-
-        const fileObj = evt.target.files![0]; // We've not allowed multiple files.
-        // See https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+        const fileObj = evt.target.files![0];
         const reader = new FileReader();
     
         // Defining the function here gives it access to the fileObj constant.
         let fileloaded = (e:any) => {
             // e.target.result is the file's content as text
-            // Don't trust the fileContents!
-            // Test any assumptions about its contents!
             const fileContents = e.target.result;
 
-            console.log(fileContents);
+            let output = fileContents;
+            const blob = new Blob([output]);                   // Step 3
+            const fileDownloadUrl = URL.createObjectURL(blob); // Step 4
 
-            status.push(`File name: "${fileObj.name}". ` +
-                        `Length: ${fileContents.length} bytes.`);
-            // Show first 80 characters of the file
-            const first80char = fileContents.substring(0,80);
-            status.push (`First 80 characters of the file:\n${first80char}`)
-            // Show the status messages
-            //this.setState ({status: status.join("\n")});
+            let download = document.getElementById("download") as HTMLAnchorElement;
+            
+            download.download = fileObj.name;
+            download.href = fileDownloadUrl;
+            download.click();
+
+            //dofileDownload.current!.click(); 
+            //URL.revokeObjectURL(fileDownloadUrl); 
+            //setDownloadURL("");
         }
     
         // Mainline of the method
@@ -36,7 +31,6 @@ const FileUpload = () => {
     }
 
     return (
-
         <div className="flex items-center justify-center w-full">
             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-80 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -50,8 +44,10 @@ const FileUpload = () => {
                 onChange={evt => openFile(evt)}
                 />
             </label>
-        </div> 
 
+            <a style={{display: "none"}} id="download"></a>
+
+        </div> 
     )
 }
 
