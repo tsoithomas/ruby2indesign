@@ -1,5 +1,37 @@
 
+
 const FileUpload = () => {
+
+
+    const openFile = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        let status:Array<string> = []; // Status output
+
+        const fileObj = evt.target.files![0]; // We've not allowed multiple files.
+        // See https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+        const reader = new FileReader();
+    
+        // Defining the function here gives it access to the fileObj constant.
+        let fileloaded = (e:any) => {
+          // e.target.result is the file's content as text
+          // Don't trust the fileContents!
+          // Test any assumptions about its contents!
+          const fileContents = e.target.result;
+          status.push(`File name: "${fileObj.name}". ` +
+                      `Length: ${fileContents.length} bytes.`);
+          // Show first 80 characters of the file
+          const first80char = fileContents.substring(0,80);
+          status.push (`First 80 characters of the file:\n${first80char}`)
+          // Show the status messages
+          //this.setState ({status: status.join("\n")});
+        }
+    
+        // Mainline of the method
+        fileloaded = fileloaded.bind(this);
+        // The fileloaded event handler is triggered when the read completes
+        reader.onload = fileloaded;
+        reader.readAsText(fileObj); // read the file
+    }
+
     return (
 
         <div className="flex items-center justify-center w-full">
@@ -11,7 +43,9 @@ const FileUpload = () => {
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">.TXT file only</p>
                 </div>
-                <input id="dropzone-file" type="file" accept=".txt" className="hidden" />
+                <input id="dropzone-file" type="file" accept=".txt" className="hidden" 
+                onChange={evt => openFile(evt)}
+                />
             </label>
         </div> 
 
