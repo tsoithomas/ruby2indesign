@@ -7,7 +7,7 @@ const Header = () => {
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a href="/" className="flex items-center">
                         <img src={ruby2xmlLogo} className="logo" alt="ruby2xml logo" />
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ruby2xml</span>
+                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">txt2ruby</span>
                     </a>
 
                     <div className="flex md:order-1">

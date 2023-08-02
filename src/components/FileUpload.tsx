@@ -12,17 +12,20 @@ const FileUpload = () => {
     
         // Defining the function here gives it access to the fileObj constant.
         let fileloaded = (e:any) => {
-          // e.target.result is the file's content as text
-          // Don't trust the fileContents!
-          // Test any assumptions about its contents!
-          const fileContents = e.target.result;
-          status.push(`File name: "${fileObj.name}". ` +
-                      `Length: ${fileContents.length} bytes.`);
-          // Show first 80 characters of the file
-          const first80char = fileContents.substring(0,80);
-          status.push (`First 80 characters of the file:\n${first80char}`)
-          // Show the status messages
-          //this.setState ({status: status.join("\n")});
+            // e.target.result is the file's content as text
+            // Don't trust the fileContents!
+            // Test any assumptions about its contents!
+            const fileContents = e.target.result;
+
+            console.log(fileContents);
+
+            status.push(`File name: "${fileObj.name}". ` +
+                        `Length: ${fileContents.length} bytes.`);
+            // Show first 80 characters of the file
+            const first80char = fileContents.substring(0,80);
+            status.push (`First 80 characters of the file:\n${first80char}`)
+            // Show the status messages
+            //this.setState ({status: status.join("\n")});
         }
     
         // Mainline of the method
