@@ -10,7 +10,7 @@ The app is implemented with React, TypeScript, Tailwind and runs only on the cli
 3. [License](#license)
 
 ## Introduction
-It is normally difficut and inefficient to add ruby texts (phonetic annotations) to CJK characters in Adobe InDesign. To overcome this hurdle, ruby2indesign makes use of a small trick, taking advantage of a special "InDesign tagged text" format, to import ruby text into the application in batch. The tool accepts text files with Chinese characters and their corresponding phonetic annotations placed on alternate lines. After the format conversion, the imported result would display the CJK characters with their corresponding ruby annotations correctly in InDesign.
+It is normally difficult and inefficient to add ruby texts (phonetic annotations) to CJK characters in Adobe InDesign. To overcome this hurdle, ruby2indesign makes use of a small trick, taking advantage of a special "InDesign tagged text" format, to import ruby text into the application in batch. The tool accepts text files with Chinese characters and their corresponding phonetic annotations placed on alternate lines. After the format conversion, the imported result would display the CJK characters with their corresponding ruby annotations correctly in InDesign.
 
 For a more detailed discussion, please read my [Medium article](https://tsoithomas.medium.com/how-to-import-chinese-characters-with-ruby-text-into-adobe-indesign-50d2293bd816?source=friends_link&sk=15870906e6608cf985980f661396d8a7).
 
