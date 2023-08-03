@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 
 const fileTypes = ["TXT"];
-
+const punctuations = ["。", "，", "、", "；", "：", "「", "」", "『", "』", "（", "　", "）", "─", "？", "！", "…", "﹏", "《", "》", "〈", "〉", "＿", "．", "—", "～"];
 
 const FileUpload = () => {
     const [progress, setProgress] = useState(0);
@@ -27,9 +27,8 @@ const FileUpload = () => {
     
         // Defining the function here gives it access to the fileObj constant.
         let fileloaded = (e:any) => {
-            const xml_head = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Root><Root>`;
-            const xml_foot = `</Root></Root>`;
-            let xml = "";
+            const markup_head = `<UNICODE-WIN>\r\n<vsn:18.5><fset:InDesign-Roman><ctable:=<Black:COLOR:CMYK:Process:0,0,0,1>>\r\n`;
+            let markup = "";
 
             let fileContents = e.target.result as string;
             const lines = fileContents.replaceAll("\r", "").split("\n");
@@ -47,28 +46,50 @@ const FileUpload = () => {
                     // Ruby line
                     rubys = lines[i].split(" ");
 
+                    markup += "<pstyle:>";
+
                     for (let j=0; j<characters.length; j++) {
-                        let ruby =  `<aid:ruby xmlns:aid="http://ns.adobe.com/AdobeInDesign/3.0/">` +
-                                    `<aid:rbc><aid:rb>`+ characters[j] + `</aid:rb></aid:rbc>` +
-                                    `<aid:rtc><aid:rt>`+ rubys[j] +`</aid:rt></aid:rtc>` +
-                                    `</aid:ruby>`;
-                        xml += ruby;
+                        let ruby: string;
+                        if (punctuations.includes(characters[j])) {
+                            ruby =  characters[j];
+                        }
+                        else {
+                            ruby =  `<cr:1><crstr:`+ rubys[j] +`>` + characters[j] + `<cr:><crstr:>`;
+                        }
+                        markup += ruby;
                     }
 
-                    xml += "\n";
+                    markup += "\r\n";
                 }
 
                 setProgress(Math.round(((i+1)/lines.length)*100));
             }
 
-            let output = xml_head + xml + xml_foot;
+            let output = markup_head + markup;
 
-            const blob = new Blob([output]);                   // Step 3
-            const fileDownloadUrl = URL.createObjectURL(blob); // Step 4
+            // Convert output to UTF-16LE
+
+            // ref: https://stackoverflow.com/q/6226189
+            var charCode, byteArray = [];
+
+            // LE BOM
+            byteArray.push(255, 254);
+
+            for (var i = 0; i < output.length; ++i) {
+                charCode = output.charCodeAt(i);
+
+                // LE Bytes
+                byteArray.push(charCode & 0xff);
+                byteArray.push(charCode / 256 >>> 0);
+            }
+
+            
+            const blob = new Blob([new Uint8Array(byteArray)], {type:'text/plain;charset=UTF-16LE;'});                   
+            const fileDownloadUrl = URL.createObjectURL(blob); 
 
             let download = document.getElementById("download") as HTMLAnchorElement;
             
-            download.download = textfile.name.substr(0, textfile.name.lastIndexOf(".")) + ".xml";
+            download.download = textfile.name.substr(0, textfile.name.lastIndexOf(".")) + "_indesign.txt";
             download.href = fileDownloadUrl;
             download.click();
             setFileOrFiles(null);
