@@ -19,3 +19,11 @@
   filter: drop-shadow(0 0 2em #ff6464aa);
 }
 
+.hide {
+  visibility: hidden;
+  transition: 0.5 all ease;
+}
+
+.animated {
+  transition: 0.5 all ease;
+}
